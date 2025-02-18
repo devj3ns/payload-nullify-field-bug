@@ -8,6 +8,7 @@ import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 
 import { Users } from './collections/Users'
+import { Documents } from './collections/Documents'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -19,7 +20,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users],
+  collections: [Users, Documents],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -28,6 +29,10 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
+  localization: {
+    defaultLocale: 'en',
+    locales: ['en', 'de'],
+  },
   sharp,
   plugins: [
     payloadCloudPlugin(),
